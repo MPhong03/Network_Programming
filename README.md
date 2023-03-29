@@ -1,4 +1,4 @@
-# Netword_Programming
+# Network_Programming
 
 Xây chương trình Chat, gửi file (audio, video, hình ảnh…) giữa Client – Server
 bằng Java với giao thức TCP mã hóa và giải mã văn bản với thuật toán mã hóa AES.
