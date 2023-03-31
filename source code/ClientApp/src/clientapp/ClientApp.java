@@ -12,13 +12,17 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import javax.swing.SwingConstants;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Minh Phong
  */
 public class ClientApp extends javax.swing.JFrame {
-    private String username;
+    private final String username;
     /**
      * Creates new form ClientApp
      * @param username
@@ -48,8 +52,11 @@ public class ClientApp extends javax.swing.JFrame {
         encryptAndSend = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         messageFromServer = new javax.swing.JTextArea();
+        generateRandomKey = new javax.swing.JButton();
+        keyLength = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         userDisplay = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client");
@@ -78,9 +85,38 @@ public class ClientApp extends javax.swing.JFrame {
         messageFromServer.setRows(5);
         jScrollPane1.setViewportView(messageFromServer);
 
+        generateRandomKey.setText("Generate");
+        generateRandomKey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateRandomKeyActionPerformed(evt);
+            }
+        });
+
+        keyLength.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "16", "24", "32" }));
+
+        jLabel3.setText("Bytes");
+
         userDisplay.setText("CLIENT");
 
-        jLabel4.setText("Message:");
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(userDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(userDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        userDisplay.setFont(new Font("Arial", Font.PLAIN, 40));
+        userDisplay.setHorizontalAlignment(SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -92,27 +128,28 @@ public class ClientApp extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(plainText, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(secretKey, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(plainText, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
                             .addComponent(encryptAndSend))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                        .addComponent(userDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(generateRandomKey, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(keyLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(secretKey))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -122,18 +159,16 @@ public class ClientApp extends javax.swing.JFrame {
                             .addComponent(plainText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(secretKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(encryptAndSend))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(userDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(5, 5, 5)))
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(encryptAndSend)
+                            .addComponent(generateRandomKey)
+                            .addComponent(keyLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        userDisplay.setFont(new Font("Arial", Font.PLAIN, 40));
-        userDisplay.setHorizontalAlignment(SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -177,34 +212,52 @@ public class ClientApp extends javax.swing.JFrame {
             String text = plainText.getText();
             String key = secretKey.getText();
             String encryptedText = AES.encrypt(text, key);
-                        
-            out.println("excuteData"); // Gửi yêu cầu đăng ký tài khoản đến Server
-       
-            out.println(encryptedText);
-            out.println(key);
-            out.println(this.username);
             
-            String line;
-            StringBuilder response = new StringBuilder();
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+            String formattedDateTime = formatter.format(date);
+            
+            if(key.getBytes().length == 16 || key.getBytes().length == 24 || key.getBytes().length == 32) {
+                String clientMessage = formattedDateTime + " [" + this.username + "]: " + text + "\n";
+                messageFromServer.append(clientMessage);
+                out.println("excuteData");
 
-            while ((line = in.readLine()) != null) {
-                response.append(line + "\n");
+                out.println(encryptedText);
+                out.println(key);
+                out.println(this.username);
+                out.println(formattedDateTime);
+
+                String line;
+                StringBuilder response = new StringBuilder();
+
+                while ((line = in.readLine()) != null) {
+                    response.append(line);
+                }
+
+                String result = response.toString();
+
+                messageFromServer.append(result + "\n");
+            } else {
+                messageFromServer.append("Key's length must be 16, 24, 32 bytes\n");
             }
-
-            String result = response.toString();
-            
-            messageFromServer.append("Server: " + response + "\n");
             
             
         } catch(IOException ex) {
-            messageFromServer.append("Unknow Error!\n" + ex);
+            messageFromServer.append("Unknow Error!: " + ex + "\n");
         }
     }//GEN-LAST:event_encryptAndSendActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         userDisplay.setText(username);
+        
     }//GEN-LAST:event_formWindowOpened
+
+    private void generateRandomKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateRandomKeyActionPerformed
+        // TODO add your handling code here:
+        int len = Integer.parseInt((String) keyLength.getSelectedItem());
+        secretKey.setText(KeyGenerator.generateRandomString(len));
+    }//GEN-LAST:event_generateRandomKeyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,12 +296,15 @@ public class ClientApp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton encryptAndSend;
+    private javax.swing.JButton generateRandomKey;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> keyLength;
     private javax.swing.JTextArea messageFromServer;
     private javax.swing.JTextField plainText;
     private javax.swing.JTextField secretKey;
