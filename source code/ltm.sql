@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2023 at 06:24 PM
+-- Generation Time: Mar 31, 2023 at 03:11 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -42,7 +42,9 @@ INSERT INTO `client` (`username`, `password`) VALUES
 ('abc', 'O58i9BFEzwdPDpc7R3UJWGazyawG3WwElVXyUr+LqDM='),
 ('abcd', 'nXQrCp+4dQ3ID4SOSUMgDA=='),
 ('MinhPhong', '7Qik19gpzyZL1wokK/Jd4w=='),
+('newuser', 'HKQm/XQ1/FXddy/3NR+c8w=='),
 ('phony', 'MH9zRfh5kuxs18l1JV0ETw=='),
+('user', 'HKQm/XQ1/FXddy/3NR+c8w=='),
 ('uwu', 'PtFBl3tdAKb5mqENkErO5A==');
 
 -- --------------------------------------------------------
@@ -53,23 +55,26 @@ INSERT INTO `client` (`username`, `password`) VALUES
 
 CREATE TABLE `message` (
   `username` varchar(50) DEFAULT NULL,
-  `messagetext` varchar(255) DEFAULT NULL
+  `messagetext` varchar(255) DEFAULT NULL,
+  `secretKey` varchar(255) DEFAULT NULL,
+  `timemessage` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `message`
 --
 
-INSERT INTO `message` (`username`, `messagetext`) VALUES
-('52100987', 'Xin chào'),
-('52100987', 'Hello'),
-('MinhPhong', 'a: 1\nb: 0\nc: 0\nd: 1\ne: 0\nf: 0\ng: 2\nh: 2\ni: 1\nj: 0\nk: 0\nl: 0\nm: 1\nn: 3\no: 1\np: 1\nq: 0\nr: 0\ns: 0\nt: 0\nu: 0\nv: 0\nw: 0\nx: 0\ny: 0\nz: 0\n'),
-('MinhPhong', 'a: 0\nb: 0\nc: 0\nd: 1\ne: 1\nf: 0\ng: 0\nh: 1\ni: 0\nj: 0\nk: 0\nl: 3\nm: 0\nn: 0\no: 2\np: 0\nq: 0\nr: 1\ns: 0\nt: 0\nu: 0\nv: 0\nw: 1\nx: 0\ny: 0\nz: 0\n'),
-('MinhPhong', 'a: 4\nb: 0\nc: 4\nd: 2\ne: 0\nf: 0\ng: 0\nh: 1\ni: 5\nj: 3\nk: 0\nl: 0\nm: 0\nn: 3\no: 0\np: 0\nq: 0\nr: 0\ns: 4\nt: 0\nu: 0\nv: 0\nw: 0\nx: 0\ny: 0\nz: 0\n'),
-('MinhPhong', 'a:1\nd:1\ng:2\nh:2\ni:1\nm:1\nn:3\no:1\np:1\n'),
-('uwu', 'd:1\ne:1\nh:1\nl:3\no:2\nr:1\nw:1\n'),
-('uwu', 'g:1\nh:2\ni:1\nm:1\nn:2\no:1\np:1\n'),
-('MinhPhong', 'a:1\nd:1\ng:2\nh:2\ni:1\nm:1\nn:3\no:1\np:1\n');
+INSERT INTO `message` (`username`, `messagetext`, `secretKey`, `timemessage`) VALUES
+('user', 'nv+mFCqUcyLDrZDleDfwW606/tAycdbBnuKejNAXDKE=', 'FDCF1D811244CE2CC92AFBD0B4A972F3', ''),
+('MinhPhong', '5mo5ZsJOpcXPVoKAUDAPxhC/N20K6aQHrfmFM16w5pM=', '4A29089425332BEB17EFE7FBDD459DEE', '30/03/2023 07:56:34'),
+('MinhPhong', '8ZjKRaIfJA4jRgE/AjwsXDUZTwQVOYcgF55NwNr8GpA=', '4A29089425332BEB17EFE7FBDD459DEE', '30/03/2023 07:56:58'),
+('MinhPhong', 'hgeOnP4Pdel7DEBo4rWOr/eWeKJgEpieKPkcYkjX1yo=', '4A29089425332BEB17EFE7FBDD459DEE', '30/03/2023 07:57:04'),
+('MinhPhong', 'lzFhYP6vef1rWWkShp+PidVICIaApHN9EmM6/UqwoHo=', '4A29089425332BEB17EFE7FBDD459DEE', '30/03/2023 07:57:14'),
+('MinhPhong', 'z5V5bLeI6jXOUI4DNrT0sN3ADMSbRZGZtV40txtaK+s=', 'EA96BA95924A118558C3925D421CE76C', '30/03/2023 08:25:35'),
+('MinhPhong', 'uBz+DnpYhLP31ndWNQe1uNBOkSqOPl7PZKdGDP5QnE0=', '343478D0927519191EBC9A36CA16D639', '30/03/2023 08:29:19'),
+('MinhPhong', 'cCxwQx4Q/m07AuHTVI51UQ==', '15B105BF0858A087CA04CE4FDD2440FF', '30/03/2023 08:29:33'),
+('newuser', 'XQM3pFSz9Q7cqIq5yr+EshHW3h+xzY7STYWVSrXBJUp4W+UxjwGPU/+QtHx1h2ON', 'B9C617CD6DB8594EEDDB01069C8FD680', '31/03/2023 04:45:47'),
+('newuser', 'PhXAtKp794VS1nibfibRj7Jkq2Bi39d88PPHUGyp3XFEBcqsAPUKBQ7z6GVKzcef', 'B9C617CD6DB8594EEDDB01069C8FD680', '31/03/2023 04:45:55');
 
 --
 -- Indexes for dumped tables
