@@ -121,6 +121,27 @@ public class ServerApp {
                     statement.setString(3, secretKey);
                     statement.setString(4, time);
                     statement.executeUpdate();
+                } else if (request.equals("excuteFile")) {
+                    String encryptedText = in.readLine();
+                    String key = in.readLine();
+                    String username = in.readLine();
+
+                    String output = excuteMessage(encryptedText, key); // Thay "hello" bằng từ cần đếm số lần xuất hiện
+
+                    Date date = new Date();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                    String formattedDateTime = formatter.format(date);
+                    
+                    String messageToClient = formattedDateTime + " [Server]: " + output;
+                    out.println(messageToClient);
+
+                    // Lưu file vào ổ D:/
+                    String filename = username + "_" + key + "_" + System.currentTimeMillis() + ".txt";
+                    String outputPath = "D:/fromclient/";
+                    File file = new File(outputPath + filename);
+                    try (FileWriter writer = new FileWriter(file)) {
+                        writer.write(encryptedText);
+                    }
                 }
 
                 // Đóng kết nối của Client

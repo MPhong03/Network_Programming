@@ -211,7 +211,7 @@ public class ClientAut extends javax.swing.JFrame {
                 app.setVisible(true);
                 this.dispose();
             } else {
-                message.setText("Username doesn't exists");
+                message.setText("Username or Password is incorrected!");
 //                message.setText(encryptedPassword);
             }
 

@@ -6,6 +6,7 @@ package clientapp;
 
 import java.awt.Font;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -14,8 +15,7 @@ import java.net.Socket;
 import javax.swing.SwingConstants;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -43,6 +43,7 @@ public class ClientApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        chooser = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -57,6 +58,9 @@ public class ClientApp extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         userDisplay = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        openFile = new javax.swing.JButton();
+        sendTextFromFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client");
@@ -96,6 +100,9 @@ public class ClientApp extends javax.swing.JFrame {
 
         jLabel3.setText("Bytes");
 
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+
+        userDisplay.setForeground(new java.awt.Color(255, 255, 255));
         userDisplay.setText("CLIENT");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -104,7 +111,7 @@ public class ClientApp extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(userDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addComponent(userDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -118,6 +125,22 @@ public class ClientApp extends javax.swing.JFrame {
         userDisplay.setFont(new Font("Arial", Font.PLAIN, 40));
         userDisplay.setHorizontalAlignment(SwingConstants.CENTER);
 
+        jLabel4.setText("Encrypted text and send");
+
+        openFile.setText("Open");
+        openFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFileActionPerformed(evt);
+            }
+        });
+
+        sendTextFromFile.setText("Send");
+        sendTextFromFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendTextFromFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -128,20 +151,30 @@ public class ClientApp extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(plainText, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(encryptAndSend))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(generateRandomKey, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(keyLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(plainText, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(encryptAndSend))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(secretKey))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(generateRandomKey, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(keyLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel3))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(secretKey))
+                                .addGap(9, 9, 9))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(openFile)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(sendTextFromFile)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -163,10 +196,16 @@ public class ClientApp extends javax.swing.JFrame {
                             .addComponent(encryptAndSend)
                             .addComponent(generateRandomKey)
                             .addComponent(keyLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(openFile)
+                            .addComponent(sendTextFromFile)))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -259,6 +298,77 @@ public class ClientApp extends javax.swing.JFrame {
         secretKey.setText(KeyGenerator.generateRandomString(len));
     }//GEN-LAST:event_generateRandomKeyActionPerformed
 
+    private void openFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileActionPerformed
+        // TODO add your handling code here:
+
+        // Hiển thị hộp thoại để cho phép người dùng chọn tập tin
+        int result = chooser.showOpenDialog(this);
+
+        // Nếu người dùng chọn tập tin, hiển thị đường dẫn của tập tin trên giao diện người dùng
+        if (result == JFileChooser.APPROVE_OPTION) {
+            // Lấy đường dẫn của tập tin đã chọn
+            String filePath = chooser.getSelectedFile().getAbsolutePath();
+            messageFromServer.append("File path: " + filePath + "\n");
+        }
+    }//GEN-LAST:event_openFileActionPerformed
+
+    private void sendTextFromFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendTextFromFileActionPerformed
+        // TODO add your handling code here:
+        // Lấy đường dẫn của tập tin đã chọn
+        String filePath = chooser.getSelectedFile().getAbsolutePath(); // Thay đổi đường dẫn tương ứng
+
+        try {
+            // Đọc nội dung của tập tin
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            StringBuilder builder = new StringBuilder();
+            String line = reader.readLine();
+
+            while (line != null) {
+                builder.append(line);
+                builder.append(System.lineSeparator());
+                line = reader.readLine();
+            }
+            reader.close();
+
+            // Mã hóa nội dung của tập tin
+            String text = builder.toString();
+            String key = secretKey.getText();
+            String encryptedText = AES.encrypt(text, key);
+
+            // Gửi nội dung đã mã hóa đến server
+            Socket clientSocket = new Socket("Phonyy", 1234);
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+
+            if(key.getBytes().length == 16 || key.getBytes().length == 24 || key.getBytes().length == 32) {
+                out.println("excuteFile");
+                out.println(encryptedText);
+                out.println(key);
+                out.println(this.username);
+
+                String lineres;
+                StringBuilder response = new StringBuilder();
+                while ((lineres = in.readLine()) != null) {
+                    response.append(lineres);
+                }
+
+                String result = response.toString();
+                messageFromServer.append(result + "\n");
+
+                // Hiển thị thông báo khi gửi nội dung thành công
+                messageFromServer.append("Send successfully\n");
+
+            } else {
+                messageFromServer.append("Key's length must be 16, 24, 32 bytes\n");
+            }
+            
+            
+        } catch (IOException e) {
+            // Hiển thị thông báo lỗi nếu có lỗi xảy ra
+            messageFromServer.append("Unknow Error!: " + e + "\n");
+        }
+    }//GEN-LAST:event_sendTextFromFileActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -295,19 +405,23 @@ public class ClientApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser chooser;
     private javax.swing.JButton encryptAndSend;
     private javax.swing.JButton generateRandomKey;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> keyLength;
     private javax.swing.JTextArea messageFromServer;
+    private javax.swing.JButton openFile;
     private javax.swing.JTextField plainText;
     private javax.swing.JTextField secretKey;
+    private javax.swing.JButton sendTextFromFile;
     private javax.swing.JLabel userDisplay;
     // End of variables declaration//GEN-END:variables
 }
