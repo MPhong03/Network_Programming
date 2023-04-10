@@ -23,6 +23,8 @@ import javax.swing.JFileChooser;
  */
 public class ClientApp extends javax.swing.JFrame {
     private final String username;
+    public String hostname = "Phonyy";
+    public int portnumber = 1234;
     /**
      * Creates new form ClientApp
      * @param username
@@ -158,7 +160,7 @@ public class ClientApp extends javax.swing.JFrame {
     private void encryptAndSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptAndSendActionPerformed
         // TODO add your handling code here:
         try {
-            Socket clientSocket = new Socket("Phonyy", 1234);
+            Socket clientSocket = new Socket(hostname, portnumber);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
@@ -251,7 +253,7 @@ public class ClientApp extends javax.swing.JFrame {
             String encryptedText = AES.encrypt(text, key);
 
             // Gửi nội dung đã mã hóa đến server
-            Socket clientSocket = new Socket("Phonyy", 1234);
+            Socket clientSocket = new Socket(hostname, portnumber);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
 
